@@ -1,0 +1,153 @@
+<!-- 
+;============================================
+; Title: Assignment 1.3
+; Author: Danial Purselley
+; Date: 29 May 2022
+; Modified By: Danial Purselley
+; Description: The is the landing page for
+; my web-330 github.
+;=========================================== 
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Course Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="/site.css" />
+    <link rel="stylesheet" type="text/css" href="/theme.css" />
+    <!-- CDN Stylesheets -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- link the javascript -->
+    <script type="application/javascript" src="theme.js"></script>
+    <title>WEB 330 - Enterprise JavaScript II</title>
+  </head>
+  <body class="light-theme">
+    <main id="container">
+      <i
+        onclick="toggleMode(this)"
+        id="icon-mode"
+        class="fa fa-toggle-off pull-right"
+        style="font-size: 28px"
+        ><span id="icon-text"></span
+      ></i>
+      <br />
+      <!-- page titles and headers -->
+      <h1 class="app-header">Danial Purselley's Landing Page</h1>
+      <h2>WEB 330 Enterprise JavaScript II</h2>
+      <hr />
+
+      <!-- list of weekly assignments. Each week will be linked
+      ; through an anchor tag as the class goes on. -->
+      <h3>Weekly Assignments</h3>
+      <ul>
+        <li><a href="week-2/purselley-payroll.html">Assignment 2.2</a></li>
+        <li>
+          <a href="week-3/purselley-temp-conversion.html">Assignment 3.2</a>
+        </li>
+        <li><a href="week-4/purselley-number-game.html">Assignment 4.2</a></li>
+        <li>
+          <a href="week-5/purselley-sequence-game.html">Assignment 5.2</a>
+        </li>
+        <li>
+          <a href="week-6/purselley-in-n-out-books.html">Assignment 6.2</a>
+        </li>
+        <li><a href="week-7/purselley-javazon.html">Assignment 7.2</a></li>
+        <li>
+          <a href="week-8/purselley-alphabet-game.html">Assignment 8.2</a>
+        </li>
+      </ul>
+
+      <!-- list of the projects that will be completed throughout
+      ; the time of this course. -->
+      <h3>Projects</h3>
+      <ul>
+        <li>Personal Portfolio</li>
+        <li>
+          <a href="https://gabe19p.github.io/web-231/"
+            >WEB 231's Landing Page</a
+          >
+        </li>
+      </ul>
+
+      <!-- list of handy links to navigate to while working on
+      ; the assignments for each week. -->
+      <h4>Important Links</h4>
+      <ul>
+        <li>
+          <a href="https://github.com/buwebdev/web-330" target="_blank"
+            >WEB 330's GitHub Repository</a
+          >
+        </li>
+        <li>
+          <a href="https://bruinconnect.bellevue.edu/" target="_blank"
+            >BRUIN Connect</a
+          >
+        </li>
+        <li>
+          <a href="https://validator.w3.org/" target="_blank"
+            >W3C HTML Validator</a
+          >
+        </li>
+        <li>
+          <a href="http://jigsaw.w3.org/css-validator/" target="_blank"
+            >W3C CSS Validator</a
+          >
+        </li>
+        <li>
+          <a href="https://www.w3schools.com/html/" target="_blank"></a>
+            HTML Tutorial</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.w3schools.com/js/js_best_practices.asp"
+            target="_blank"
+          >
+            JavaScript Best Practices</a
+          >
+        </li>
+      </ul>
+    </main>
+
+    <!-- start of javascript -->
+    <script>
+      setDefaultTheme();
+
+      //  onclick function
+      function toggleMode(x) {
+        let colorTheme = document.body.classList;
+        let iconMode = x.classList;
+
+        // changes from light to dark
+        if (colorTheme.value === "light-theme") {
+          localStorage.clear();
+          localStorage.setItem("mode", "dark-theme");
+          localStorage.setItem("iconMode", "fa-toggle-on");
+          localStorage.setItem("iconText", "Dark Mode");
+        } else {
+        //  changes from dark to light
+          localStorage.clear();
+          localStorage.setItem("mode", "light-theme");
+          localStorage.setItem("iconMode", "fa-toggle-off");
+          localStorage.setItem("iconText", "Light Mode");
+        }
+
+        // apply the changes
+        colorTheme.value = localStorage.getItem("mode");
+        iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+        document.getElementById("icon-text").innerHTML =
+          localStorage.getItem("iconText");
+      }
+    </script>
+  </body>
+</html>
