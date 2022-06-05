@@ -1,0 +1,174 @@
+<!-- 
+;============================================
+; Title: Assignment 2
+; Author: Danial Purselley
+; Date: 31 May 2022
+; Modified By: Danial Purselley
+; Description: The program will check to 
+; see if words are palindromes or not.
+;=========================================== 
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Course Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="../site.css" />
+    <link rel="stylesheet" type="text/css" href="../theme.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+    />
+    <!-- CDN Stylesheets -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- link the javascript -->
+    <script src="../theme.js"></script>
+    <!-- 
+     ; Page Title
+     -->
+    <title>WEB 330 - Enterprise JavaScript II</title>
+  </head>
+  <body class="light-theme">
+    <!-- start of the top container -->
+    <div class="assign-container">
+      <!-- page header -->
+      <div class="app-header">Welcome to the Palindrome App!</div>
+      <!-- start of the first card -->
+      <div class="assign-content">
+        <div class="card">
+          <!-- card name -->
+          <div class="card-title">Palindrome Checker</div>
+          <!-- card area for user input -->
+          <div class="card-content">
+            <div class="form">
+              <div class="form-field">
+                <label for="txtPhrase">Phrase value:</label>
+                <input
+                  type="text"
+                  name="txtPhrase"
+                  id="txtPhrase"
+                  class="input"
+                />
+              </div>
+              <!-- end of form-field w/ user input-->
+              <!-- form field with CTA Button -->
+              <div class="form-field">
+                <button id="btnCheckPhrase" class="btn btn-primary full-width">
+                  Check Phrase
+                </button>
+              </div>
+              <!-- end form-field with button -->
+            </div>
+            <!-- end of form -->
+          </div>
+          <!-- end of card-content -->
+        </div>
+        <!-- end of card -->
+      </div>
+
+      <!-- end of assign-content card -->
+    </div>
+    <!-- end assign-container -->
+    <!-- anchor tag back to the course landing page -->
+    <div id="return-container">
+      <a href="../index.html" class="return-home">Return</a>
+    </div>
+    <!-- assign container # 2 -->
+    <div class="assign-container">
+      <div class="assign-content">
+        <!-- start of results card -->
+        <div class="card">
+          <div class="card-title">Palindrome Results</div>
+          <!-- start of card content with the results -->
+          <div class="card-content">
+            <div id="assign-results-header"></div>
+            <div id="assign-results" class="assign-results-text"></div>
+          </div>
+        </div>
+        <!-- end card with results -->
+      </div>
+      <!-- end assign-content #2 -->
+    </div>
+    <!-- end assign-container #2 -->
+
+    <!-- start of javascript -->
+    <script>
+      //  onclick function to capture the users input
+      document.getElementById("btnCheckPhrase").onclick = () => {
+        //  attach variable to input field
+        const txtValue = document
+          .getElementById("txtPhrase")
+          .value.toLowerCase();
+        //  attach variable to results div
+        let assignResults = document.getElementById("assign-results");
+        //  set date function
+        const today = getTodaysDate();
+        //  variable to call the length function
+        const len = getLength(txtValue);
+        //  variable to reverse the string
+        const reversedPhrase = reverse(txtValue);
+        //  create string literal of input information
+        let header = `<div>Date: ${today.toLocaleDateString()}</div>
+        <div>Original Phrase: ${txtValue}</div>
+        <div>Reversed Phrase: ${reversedPhrase}</div>
+        <div>Phrase Length: ${len}</div>`;
+        //  assign header to a div
+        document.getElementById("assign-results-header").innerHTML = header;
+        //  display assignResults
+        if (txtValue === reversedPhrase) {
+          //  console test for word to be true
+          console.log("true");
+          //  assign result id with answer
+          document.getElementById(
+            "assign-results"
+          ).innerHTML = `<div> ${txtValue} <b><u>is</u></b> a palindrome!`;
+          // let assignResults.innerHTML = `<div> ${txtValue} <b><u>is</u></b> a palindrome!`;
+        } else {
+          //  console test for word to be false
+          console.log("false");
+          //  assign result id with answer
+          document.getElementById(
+            "assign-results"
+          ).innerHTML = `<div> ${txtValue} <b><u>is not</u></b> a palindrome!`;
+        }
+      };
+
+      //  return todays date
+      function getTodaysDate() {
+        return new Date();
+      }
+
+      //  return the stings length
+      function getLength(stringValue) {
+        return stringValue.length;
+      }
+
+      //  return the strings reverse self
+      function reverse(stringValue) {
+        //  split the user input to every character
+        let splitValue = stringValue.split("");
+        //  reverse the array of single items
+        let reverseSplit = splitValue.reverse();
+        //  rejoin the array
+        let reverseString = reverseSplit.join("");
+        return reverseString;
+      } //  end reverse function
+
+      //  return if the string is a palindrome
+      function isPalindrome(stringValue) {
+        //  check equality of string and reversed version
+        if (reverse(stringValue) === stringValue) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    </script>
+  </body>
+</html>
