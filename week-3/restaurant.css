@@ -1,0 +1,21 @@
+/* set up the 2x2 grid */
+#menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 1em;
+  row-gap: 1em;
+  padding: 1em;
+}
+
+/* style to button to fit in the card */
+#btnOrder {
+  height: 3em;
+  width: 95%;
+  margin: 0.5em;
+  border: none;
+}
+
+/* add spacing for the menu items */
+.card-contents {
+  padding: 0 1em 0.25em 1em;
+}
