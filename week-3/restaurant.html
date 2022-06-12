@@ -40,7 +40,7 @@
     </script>
     <title>WEB 330 - Enterprise JavaScript II</title>
   </head>
-  <body>
+  <body class="light-theme">
     <main id="container">
       <!-- start of the app header container -->
       <div class="assign-container">
@@ -97,7 +97,7 @@
               <!-- appetizers card -->
               <div class="card">
                 <div class="card-title">Appetizers</div>
-                <div class="card-contents">
+                <div class="card-contents" id="appetizers">
                   <label for="nachos">
                     <input
                       type="checkbox"
@@ -136,7 +136,7 @@
               <!-- main course card -->
               <div class="card">
                 <div class="card-title">Main Courses</div>
-                <div class="card-contents">
+                <div class="card-contents" id="main-course">
                   <label for="tacos">
                     <input
                       type="checkbox"
@@ -174,7 +174,7 @@
               <!-- desserts card -->
               <div class="card">
                 <div class="card-title">Desserts</div>
-                <div class="card-contents">
+                <div class="card-contents" id="desserts">
                   <label for="iceCream">
                     <input
                       type="checkbox"
@@ -230,17 +230,56 @@
     </main>
     <!-- start of javascript -->
     <script>
+      //  the below code doesn't match
+      //  the exact instructions for this
+      //  weeks assignment, but it does
+      //  give me the same output
       document.getElementById("btnOrder").onclick = function () {
+        // set a blank total to add onto
+        let total = 0;
+        //  total up the
+        //  beverages cost
         const beveragesEl = document.getElementById("beverages");
         const beverages = beveragesEl.getElementsByTagName("input");
-        const bill = new Bill();
-
+        //  loop over beverages to get cost
         for (let beverage of beverages) {
           if (beverage.checked) {
-            bill.addBeverage(new Beverage(beverage.name, beverage.value));
-            console.log(beverage.name + beverage.value);
+            total += parseFloat(beverage.value);
           }
         }
+        //  total up the
+        //  appetizers cost
+        const appetizersEl = document.getElementById("appetizers");
+        const appetizers = appetizersEl.getElementsByTagName("input");
+        //  loop over appetizers to get cost
+        for (let app of appetizers) {
+          if (app.checked) {
+            total += parseFloat(app.value);
+          }
+        }
+        //  total up the
+        //  main courses cost
+        const mainCoursesEl = document.getElementById("main-course");
+        const mainCourses = mainCoursesEl.getElementsByTagName("input");
+        //  loop over appetizers to get cost
+        for (let mainCourse of mainCourses) {
+          if (mainCourse.checked) {
+            total += parseFloat(mainCourse.value);
+          }
+        }
+        //  total up the
+        //  appetizers cost
+        const dessertsEl = document.getElementById("desserts");
+        const desserts = dessertsEl.getElementsByTagName("input");
+        //  loop over appetizers to get cost
+        for (let dessert of desserts) {
+          if (dessert.checked) {
+            total += parseFloat(dessert.value);
+          }
+        }
+
+        document.getElementById("order-total").innerHTML =
+          "Your order total is " + total.toFixed(2);
       };
     </script>
   </body>
