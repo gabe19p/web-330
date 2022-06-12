@@ -1,3 +1,14 @@
+/* 
+;============================================
+; Title: Assignment 3
+; Author: Danial Purselley
+; Date: 12 June 2022
+; Modified By: Danial Purselley
+; Description: The is the styling sheet
+; for the restaurant assignment.
+;=========================================== 
+ */
+
 /* set up the 2x2 grid */
 #menu {
   display: grid;
@@ -18,4 +29,9 @@
 /* add spacing for the menu items */
 .card-contents {
   padding: 0 1em 0.25em 1em;
+}
+
+/* change the color of the checkbox to blue */
+input {
+  accent-color: rgb(0, 140, 255);
 }
