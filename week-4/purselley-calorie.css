@@ -1,0 +1,7 @@
+/* styling the food examples span */
+#foodList {
+  float: right;
+  color: #df546a;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
