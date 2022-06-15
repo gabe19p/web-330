@@ -18,6 +18,61 @@ body {
   background: var(--background-color);
 }
 
+/* anchor styling for theme */
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+a:hover {
+  color: var(--anchor-hover-color);
+  background-color: var(--anchor-hover-background-color);
+}
+/* end anchor styles */
+
+/* headings styles */
+h1 {
+  color: var(--heading-color);
+  background-color: var(--h1-background-color);
+  padding: 10px;
+  border: 1px solid var(--h1-border-color);
+}
+
+h2,
+h3,
+h4 {
+  color: var(--heading-color);
+  background-color: var(--heading-background-color);
+  padding: 10px;
+  border: 1px solid var(--heading-border-color);
+}
+
+/* table styling corrections */
+table {
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+/* table cells sizing and color corrections*/
+th {
+  text-align: left;
+  background-color: var(--table-header-background-color);
+  color: white;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 12px 10px 12px 10px;
+}
+
+tr:hover {
+  background-color: var(--table-hover-background-color);
+  color: var(--table-hover-color);
+  cursor: pointer;
+}
+/* end of table styling */
+
 /* page card stylings */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -53,7 +108,7 @@ body {
 }
 
 .btn-primary {
-  background-color: #4f3674;
+  background-color: var(--btn-background-color);
   color: white;
 }
 
@@ -82,35 +137,35 @@ body {
   box-sizing: border-box;
 }
 
-/* headings styles */
-h1 {
-  color: var(--heading-color);
-  background-color: var(--h1-background-color);
-  padding: 10px;
-  border: 1px solid var(--h1-border-color);
+/* change card title colors for theme */
+.card-title {
+  color: var(--card-title-color);
 }
 
-h2,
-h3,
-h4 {
-  color: var(--heading-color);
-  background-color: var(--heading-background-color);
-  padding: 10px;
-  border: 1px solid var(--heading-border-color);
+/* style the return button */
+.return-home {
+  color: var(--anchor-color);
+  text-decoration: none;
 }
+
+.return-home:hover {
+  color: var();
+  background-color: var(--anchor-hover-background-color);
+}
+/* end return styles */
 
 /* style variables for light theme */
 body.light-theme {
   --text-color: #000;
   --background-color: #fff;
   --anchor-color: #4f3674;
+  --anchor-hover-color: #4f3674;
+  --anchor-hover-background-color: #d6a800;
   --h1-background-color: #3c275a;
   --h1-border-color: #d6a800;
   --heading-background-color: #3c275a;
   --heading-color: #fff;
   --heading-border-color: #d6a800;
-  --anchor-hover-color: #4f3674;
-  --anchor-hover-background-color: #d6a800;
   --card-background-color: #fff;
   --card-title-color: #4f3674;
   --btn-background-color: #4f3674;
@@ -118,6 +173,11 @@ body.light-theme {
   --btn-hover-background-color: #d6a800;
   --btn-hover-color: #4f3674;
   --input-border-color: #ccc;
+  --table-header-background-color: #4f3674;
+  --table-header-color: #fff;
+  --table-border-color: #ddd;
+  --table-hover-background-color: #d6a800;
+  --table-hover-color: #4f3674;
 }
 
 /* style variables for dark theme */
@@ -139,9 +199,9 @@ body.dark-theme {
   --btn-hover-background-color: #7d4787;
   --btn-hover-color: #fff;
   --input-border-color: #303030;
-}
-
-/* remove anchor underline */
-a {
-  text-decoration: none;
+  --table-header-background-color: #d176e1;
+  --table-header-color: #fff;
+  --table-border-color: #303030;
+  --table-hover-background-color: #7d4787;
+  --table-hover-color: #fff;
 }
