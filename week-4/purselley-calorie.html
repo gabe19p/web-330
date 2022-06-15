@@ -28,6 +28,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+
     <title>WEB 330 - Enterprise JavaScript II</title>
   </head>
   <body class="light-theme">
@@ -50,7 +51,12 @@
               <div class="form">
                 <div class="form-field">
                   <label for="txtFoodItem">Enter a food item:</label>
-                  <input type="text" name="txtFoodItem" id="txtFoodItem" />
+                  <input
+                    type="text"
+                    name="txtFoodItem"
+                    id="txtFoodItem"
+                    class="input"
+                  />
                   <br />
                   <span id="foodList"
                     >(Ex: Egg, Apple, Hamburger, Fries, Banana, Soda)</span
@@ -86,5 +92,28 @@
       </div>
       <!-- end results container -->
     </main>
+
+    <!-- start javascript -->
+    <script type="module">
+      import { CalorieConverter } from "./calorie-converter.js";
+      //  assign input variable
+      let txtFoodItemEl = document.getElementById("txtFoodItem");
+
+      //  variable for the food list
+      let foodList = CalorieConverter.data;
+      console.log(foodList);
+
+      //  onclick function
+      document.getElementById("btnSearch").onclick = function () {
+        //  reassign input variable to the value
+        let txtFoodItem = txtFoodItemEl.value.toLowerCase();
+
+        //  find the users input in the data
+        let foods = CalorieConverter.find(txtFoodItem);
+        console.log(foods);
+
+        let tableData = `<table></table>`;
+      };
+    </script>
   </body>
 </html>
