@@ -19,6 +19,8 @@
     <link rel="stylesheet" type="text/css" href="../site.css" />
     <link rel="stylesheet" type="text/css" href="../theme.css" />
     <link rel="stylesheet" type="text/css" href="purselley-calorie.css" />
+    <script src="../theme.js"></script>
+    <!-- font kit -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
@@ -33,6 +35,14 @@
   </head>
   <body class="light-theme">
     <main id="container">
+      <i
+        onclick="toggleMode(this)"
+        id="icon-mode"
+        class="fa fa-toggle-off pull-right"
+        style="font-size: 28px"
+        ><span id="icon-text"></span
+      ></i>
+      <br />
       <!-- app header container -->
       <div class="assign-container">
         <div class="assign-content">
@@ -96,24 +106,106 @@
     <!-- start javascript -->
     <script type="module">
       import { CalorieConverter } from "./calorie-converter.js";
-      //  assign input variable
+
+      //  assign a button variable
+      let searchButton = document.getElementById("btnSearch");
+
+      //  assign input variable for results fields
       let txtFoodItemEl = document.getElementById("txtFoodItem");
 
       //  variable for the food list
       let foodList = CalorieConverter.data;
-      console.log(foodList);
 
-      //  onclick function
-      document.getElementById("btnSearch").onclick = function () {
+      //  capitalize function
+      function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+
+      //  search function for the CTA
+      const searchFunction = function () {
         //  reassign input variable to the value
         let txtFoodItem = txtFoodItemEl.value.toLowerCase();
 
         //  find the users input in the data
         let foods = CalorieConverter.find(txtFoodItem);
-        console.log(foods);
 
-        let tableData = `<table></table>`;
+        //  food table
+        let tableData = `<table id="my-table">
+              <tr>
+                <th>Name</th>
+                <th>Calories</th>
+              </tr>
+              <tr>
+            <td>${capitalize(foods.name)}</td>
+            <td>${foods.calories}</td>
+          </tr>
+            </table>`;
+        //  assign table to div
+        document.getElementById("searchResults").innerHTML = tableData;
+
+        let tr = tableData.getElementsByTagName("tr");
+
+        console.log(tr);
+
+        // let table = document.getElementById("my-table");
+        // //  iterate through rows
+        // for (var i = 0, row; (row = table.rows[i]); i++) {
+        //   //  iterate through columns
+        //   for (var j = 0, col; (col = row.cells[j]); j++) {
+        //     console.log(row);
+        //   }
+        // }
+        // let rows = document.getElementsByTagName("tr");
+        // if (foods != rows[]){}
+        // let newRow = tableUpdate.insertRow(-1);
+        // let cell1 = newRow.insertCell(0);
+        // let cell2 = newRow.insertCell(1);
+        // cell1.innerHTML = foods.name;
+        // cell2.innerHTML = foods.calories;
+        // let cell1 = row.insertCell(0);
+        // let cell2 = row.insertCell(1);
+        // tableData.(capitalize(foods.name), foods.calories);
       };
+
+      //  run the function onclick
+      searchButton.onclick = searchFunction;
+
+      //  run the function with enter key
+      txtFoodItemEl.addEventListener("keyup", (pressedKey) => {
+        if (pressedKey.key === "Enter" || pressedKey.keyCode === 13) {
+          searchFunction();
+        }
+      });
+    </script>
+    <!-- theme switching script -->
+    <script>
+      //  theme function
+      setDefaultTheme();
+
+      //  onclick function
+      function toggleMode(x) {
+        let colorTheme = document.body.classList;
+        let iconMode = x.classList;
+
+        // changes from light to dark
+        if (colorTheme.value === "light-theme") {
+          localStorage.clear();
+          localStorage.setItem("mode", "dark-theme");
+          localStorage.setItem("iconMode", "fa-toggle-on");
+          localStorage.setItem("iconText", "Dark Mode");
+        } else {
+          //  changes from dark to light
+          localStorage.clear();
+          localStorage.setItem("mode", "light-theme");
+          localStorage.setItem("iconMode", "fa-toggle-off");
+          localStorage.setItem("iconText", "Light Mode");
+        }
+        // apply the changes
+        colorTheme.value = localStorage.getItem("mode");
+        iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+        document.getElementById("icon-text").innerHTML =
+          localStorage.getItem("iconText");
+      }
     </script>
   </body>
 </html>
