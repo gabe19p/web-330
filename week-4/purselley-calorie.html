@@ -121,6 +121,14 @@
         return string.charAt(0).toUpperCase() + string.slice(1);
       }
 
+      //  food table
+      let tableData = `
+        <table id="my-table">          
+          <tr>
+            <th>Name</th>
+            <th>Calories</th>
+          </tr>`;
+
       //  search function for the CTA
       const searchFunction = function () {
         //  reassign input variable to the value
@@ -129,42 +137,19 @@
         //  find the users input in the data
         let foods = CalorieConverter.find(txtFoodItem);
 
-        //  food table
-        let tableData = `<table id="my-table">
-              <tr>
-                <th>Name</th>
-                <th>Calories</th>
-              </tr>
-              <tr>
+        //  for loop to add more list items to the table data for every on click
+        for (let food of foodList) {
+          if (food == foods) {
+            tableData += `<tr>
             <td>${capitalize(foods.name)}</td>
             <td>${foods.calories}</td>
-          </tr>
-            </table>`;
+          </tr>`;
+          }
+          `</table>`;
+        }
+
         //  assign table to div
         document.getElementById("searchResults").innerHTML = tableData;
-
-        let tr = tableData.getElementsByTagName("tr");
-
-        console.log(tr);
-
-        // let table = document.getElementById("my-table");
-        // //  iterate through rows
-        // for (var i = 0, row; (row = table.rows[i]); i++) {
-        //   //  iterate through columns
-        //   for (var j = 0, col; (col = row.cells[j]); j++) {
-        //     console.log(row);
-        //   }
-        // }
-        // let rows = document.getElementsByTagName("tr");
-        // if (foods != rows[]){}
-        // let newRow = tableUpdate.insertRow(-1);
-        // let cell1 = newRow.insertCell(0);
-        // let cell2 = newRow.insertCell(1);
-        // cell1.innerHTML = foods.name;
-        // cell2.innerHTML = foods.calories;
-        // let cell1 = row.insertCell(0);
-        // let cell2 = row.insertCell(1);
-        // tableData.(capitalize(foods.name), foods.calories);
       };
 
       //  run the function onclick
