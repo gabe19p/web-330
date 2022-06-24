@@ -1,4 +1,4 @@
-class ShoppingCart {
+export class ShoppingCart {
   constructor() {
     let products = [];
 
@@ -6,8 +6,14 @@ class ShoppingCart {
       return products.length;
     }
 
-    function add(productObj) {
-      products += productObj;
+    function add(product) {
+      products += product;
+    }
+
+    function* loop() {
+      for (const product of products) {
+        yield product;
+      }
     }
   }
 }
