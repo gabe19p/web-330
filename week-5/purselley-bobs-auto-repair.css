@@ -1,0 +1,26 @@
+/* 
+;============================================
+; Title: Assignment 5.2
+; Author: Danial Purselley
+; Date: 24 June 2022
+; Modified By: Danial Purselley
+; Description: This is a shopping cart 
+; simulation program. This is the style-sheet.
+;=========================================== 
+*/
+
+/* cart message styling */
+#cart-message {
+  float: right;
+  color: #df546a;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  padding: 0.5rem;
+}
+i:hover {
+  cursor: pointer;
+}
+
+#shopping-cart {
+  text-align: center;
+}
