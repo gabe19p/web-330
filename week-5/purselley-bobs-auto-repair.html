@@ -120,22 +120,54 @@
       import { Product } from "./product.js";
       //   import { ShoppingCart } from "./shopping-cart.js";
 
+      // empty products array for cart count
       let products = [];
+
+      //  products table
+      let tableData = `
+        <table id="my-table">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>`;
 
       //  search function for the CTA
       const searchFunction = function () {
         let productList = document.getElementById("productList");
         let product = productList.options[productList.selectedIndex].text;
         let productValue = productList.options[productList.selectedIndex].value;
+        let productTable = document.getElementById("searchResults");
+
+        //  randomize the id numbers
+        let id = Math.random().toString(16).slice(2);
 
         //  if statement to filter out if user selects "select"
         if (product != "--Select--") {
           alert(product + " was added to your shopping cart!");
           products++;
+          tableData += `<tr>
+              <td>${id}</td>
+              <td>${product}</td>
+              <td>${productValue}</td>
+            `;
+        } else {
+          alert("Please select an item");
         }
 
+        //  create variable for cart icon area
         let cartCount = document.getElementById("cart-count");
+        //  assign the number increment to the cart icon area
         cartCount.innerHTML = products;
+        //  assign the table to the div
+        productTable.innerHTML = tableData;
+
+        //  leave the cart open, if already open, else hide it
+        if (tableDiv.style.display == "block") {
+          tableDiv.style.display = "block";
+        } else {
+          tableDiv.style.display = "none";
+        }
       };
 
       //   was stating that shoppingCart.count() wasn't a function.
@@ -147,6 +179,17 @@
       //   function setCartCount() {
       //     document.getElementById("cart-count").innerHTML = shoppingCart.count();
       //   }
+
+      let tableDiv = document.getElementById("searchResults");
+
+      //  hide/show shopping cart
+      document.getElementById("cartIcon").onclick = function () {
+        if (tableDiv.style.display == "none") {
+          tableDiv.style.display = "block";
+        } else {
+          tableDiv.style.display = "none";
+        }
+      };
 
       //  onclick function to add to cart
       document.getElementById("btnAddProduct").onclick = searchFunction;
