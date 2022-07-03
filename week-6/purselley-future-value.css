@@ -3,6 +3,7 @@
   color: #df546a;
   font-size: 12px;
   letter-spacing: 2px;
+  padding: 0 2rem 0 2rem;
 }
 
 .label {
@@ -11,4 +12,8 @@
 
 .float-right {
   float: right;
+}
+
+.float-left {
+  float: left;
 }

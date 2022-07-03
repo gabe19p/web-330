@@ -21,6 +21,8 @@
     <link rel="stylesheet" type="text/css" href="../theme.css" />
 
     <script src="../theme.js"></script>
+    <script src="./finance-calculator.js" type="module"></script>
+    <script src="./required-field.js" type="module"></script>
     <!-- font kit -->
     <link
       rel="stylesheet"
@@ -61,8 +63,9 @@
                 <div class="card">
                   <div class="card-title">Future Value Calculator</div>
 
-                  <div class="danger" id="errorLog"></div>
-
+                  <div class="danger float-left" id="errorLog"><ul></ul></div>
+                  <br />
+                  <br />
                   <!-- user input area -->
 
                   <div class="card-content">
@@ -89,6 +92,8 @@
                           class="col-5 float-right"
                         />
                       </div>
+
+                      <span><i class="danger">Enter 11.1% as 11.1</i></span>
 
                       <!-- years input -->
                       <div class="form-field form-label">
@@ -142,9 +147,11 @@
         <div class="assign-content">
           <div class="card">
             <div class="card-title">
-              Calculate as of <span id="today"></span>
+              Calculation as of <span id="today"></span>
             </div>
-            <div class="card-content" id="futureValue"></div>
+            <div class="card-content">
+              <div class="assign-results-text" id="futureValue"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -153,8 +160,46 @@
 
     <!-- start javascript -->
     <script type="module">
+      import { FinanceCalculator } from "./finance-calculator.js";
+      import { RequiredField } from "./required-field.js";
       let today = new Date().toLocaleDateString();
-      document.getElementById("today").innerHTML = today;
+      let btnCalculate = document.getElementById("btnCalculate");
+      let errorLogEl = document.getElementById("errorLog");
+
+      btnCalculate.onclick = () => {
+        let userPayment = parseInt(
+          document.getElementById("txtMonthlyPayment").value
+        );
+        let userRate = document.getElementById("txtYearlyRate").value;
+        let userYears = parseInt(
+          document.getElementById("listNumOfYears").value
+        );
+
+        let fieldCheck = new RequiredField();
+
+        let paymentInputCheck = fieldCheck.validate(userPayment);
+        let rateInputCheck = fieldCheck.validate(parseInt(userRate));
+
+        let calculate = new FinanceCalculator();
+        let futureValue = calculate.calculateFutureValue(
+          userPayment,
+          userRate,
+          userYears
+        );
+
+        console.log(paymentInputCheck);
+        console.log(rateInputCheck);
+
+        if (isNaN(futureValue)) {
+          if (paymentInputCheck == true) {
+            errorLogEl.innerHTML = fieldCheck.getMessage("Monthly Payment");
+          }
+        } else {
+          document.getElementById("futureValue").innerHTML =
+            "The future value is $" + futureValue;
+          document.getElementById("today").innerHTML = today;
+        }
+      };
     </script>
 
     <!-- theme switching script -->
