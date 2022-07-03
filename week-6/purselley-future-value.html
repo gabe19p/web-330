@@ -90,6 +90,7 @@
                           name="txtYearlyRate"
                           id="txtYearlyRate"
                           class="col-5 float-right"
+                          placeholder="0"
                         />
                       </div>
 
@@ -197,6 +198,7 @@
             errorLogEl.innerHTML = fieldCheck.getMessage("Monthly Payment");
           }
         } else {
+          errorLogEl.innerHTML = "";
           document.getElementById("futureValue").innerHTML =
             "The future value is " + numberFormat;
           document.getElementById("today").innerHTML = today;
