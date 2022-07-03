@@ -1,0 +1,14 @@
+.danger {
+  float: right;
+  color: #df546a;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.label {
+  width: 50px;
+}
+
+.float-right {
+  float: right;
+}

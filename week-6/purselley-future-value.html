@@ -1,0 +1,191 @@
+<!-- 
+;============================================
+; Title: Assignment 6.2
+; Author: Danial Purselley
+; Date: 29 June 2022
+; Modified By: Danial Purselley
+; Description: This is a interest calculator.
+;=========================================== 
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Course Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="purselley-future-value.css" />
+    <link rel="stylesheet" type="text/css" href="flex-layout.css" />
+    <link rel="stylesheet" type="text/css" href="../site.css" />
+    <link rel="stylesheet" type="text/css" href="../theme.css" />
+
+    <script src="../theme.js"></script>
+    <!-- font kit -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+    />
+    <!-- CDN Stylesheets -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <title>WEB 330 - Enterprise JavaScript II</title>
+  </head>
+  <body class="light-theme">
+    <main id="container">
+      <i
+        onclick="toggleMode(this)"
+        id="icon-mode"
+        class="fa fa-toggle-off pull-right"
+        style="font-size: 28px"
+        ><span id="icon-text"></span
+      ></i>
+      <br />
+      <!-- app header container -->
+      <div class="assign-container">
+        <div class="assign-content">
+          <div class="app-header">Welcome to the Future Value App!</div>
+        </div>
+      </div>
+      <!-- end app header container -->
+
+      <!-- user input card container -->
+      <div class="assign-container">
+        <div class="assign-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-title">Future Value Calculator</div>
+
+                  <div class="danger" id="errorLog"></div>
+
+                  <!-- user input area -->
+
+                  <div class="card-content">
+                    <div class="form">
+                      <!-- monthly payment label -->
+
+                      <div class="form-field form-label">
+                        <label for="txtMonthlyPayment">Monthly Payment:</label>
+                        <input
+                          type="text"
+                          name="txtMonthlyPayment"
+                          id="txtMonthlyPayment"
+                          class="col-5 float-right"
+                        />
+                      </div>
+
+                      <!-- interest rate input -->
+                      <div class="form-field form-label">
+                        <label for="txtYearlyRate">Interest Rate:</label>
+                        <input
+                          type="text"
+                          name="txtYearlyRate"
+                          id="txtYearlyRate"
+                          class="col-5 float-right"
+                        />
+                      </div>
+
+                      <!-- years input -->
+                      <div class="form-field form-label">
+                        <label for="listNumOfYears">Number of Years:</label>
+                        <select
+                          name="listNumOfYears"
+                          id="listNumOfYears"
+                          class="col-6 float-right"
+                        >
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                      </div>
+
+                      <div class="form-field col-7">
+                        <button
+                          id="btnCalculate"
+                          class="btn btn-primary full-width"
+                        >
+                          Calculate
+                        </button>
+                      </div>
+                    </div>
+                    <!-- end user input area -->
+                  </div>
+                </div>
+                <!-- end card -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end calorie search container -->
+
+      <!-- anchor tag back to the course landing page -->
+      <div id="return-container">
+        <a href="../index.html" class="return-home">Return</a>
+      </div>
+      <!-- end anchor tag -->
+
+      <!-- results container -->
+      <div class="assign-container">
+        <div class="assign-content">
+          <div class="card">
+            <div class="card-title">
+              Calculate as of <span id="today"></span>
+            </div>
+            <div class="card-content" id="futureValue"></div>
+          </div>
+        </div>
+      </div>
+      <!-- end results container -->
+    </main>
+
+    <!-- start javascript -->
+    <script type="module">
+      let today = new Date().toLocaleDateString();
+      document.getElementById("today").innerHTML = today;
+    </script>
+
+    <!-- theme switching script -->
+    <script>
+      //  theme function
+      setDefaultTheme();
+
+      //  onclick function
+      function toggleMode(x) {
+        let colorTheme = document.body.classList;
+        let iconMode = x.classList;
+
+        // changes from light to dark
+        if (colorTheme.value === "light-theme") {
+          localStorage.clear();
+          localStorage.setItem("mode", "dark-theme");
+          localStorage.setItem("iconMode", "fa-toggle-on");
+          localStorage.setItem("iconText", "Dark Mode");
+        } else {
+          //  changes from dark to light
+          localStorage.clear();
+          localStorage.setItem("mode", "light-theme");
+          localStorage.setItem("iconMode", "fa-toggle-off");
+          localStorage.setItem("iconText", "Light Mode");
+        }
+        // apply the changes
+        colorTheme.value = localStorage.getItem("mode");
+        iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+        document.getElementById("icon-text").innerHTML =
+          localStorage.getItem("iconText");
+      }
+    </script>
+  </body>
+</html>
