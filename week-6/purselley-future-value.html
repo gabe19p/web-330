@@ -187,6 +187,8 @@
           userYears
         );
 
+        let numberFormat = calculate.convertToCurrency(futureValue);
+
         console.log(paymentInputCheck);
         console.log(rateInputCheck);
 
@@ -196,7 +198,7 @@
           }
         } else {
           document.getElementById("futureValue").innerHTML =
-            "The future value is $" + futureValue;
+            "The future value is " + numberFormat;
           document.getElementById("today").innerHTML = today;
         }
       };

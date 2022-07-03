@@ -15,7 +15,7 @@ export class FinanceCalculator {
     return futureValue.toFixed(2);
   }
 
-  static convertToCurrency(field) {
+  convertToCurrency(field) {
     let currencyFormatter = new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
