@@ -1,0 +1,356 @@
+<!-- 
+;============================================
+; Title: Assignment 8.2
+; Author: Danial Purselley
+; Date: 17 July 2022
+; Modified By: Danial Purselley
+; Description: This is a book list program.
+;=========================================== 
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Course Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="../site.css" />
+    <link rel="stylesheet" type="text/css" href="../theme.css" />
+
+    <script src="../theme.js"></script>
+    <script src="./http-client.js" type="module"></script>
+
+    <!-- font kit -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+    />
+    <!-- CDN Stylesheets -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <title>WEB 330 - Enterprise JavaScript II</title>
+  </head>
+  <body class="light-theme">
+    <main id="container">
+      <i
+        onclick="toggleMode(this)"
+        id="icon-mode"
+        class="fa fa-toggle-off pull-right"
+        style="font-size: 28px"
+        ><span id="icon-text"></span
+      ></i>
+      <br />
+      <!-- app header container -->
+      <div class="assign-container">
+        <div class="assign-content">
+          <div class="app-header">Welcome to the WhatABook, Part 2 App!</div>
+        </div>
+      </div>
+      <!-- end app header container -->
+
+      <div class="assign-container">
+        <div class="assign-content">
+          <div class="card">
+            <div class="card-title">Book Listing</div>
+            <div class="card-content" id="bookList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- anchor tag back to the course landing page -->
+      <div id="return-container">
+        <a href="../index.html" class="return-home">Return</a>
+      </div>
+      <!-- end anchor tag -->
+
+      <!-- results container -->
+      <div class="assign-container">
+        <div class="assign-content">
+          <div class="card">
+            <div class="card-title">Selected Book</div>
+            <div class="card-content" id="selectedBook"></div>
+          </div>
+        </div>
+      </div>
+      <!-- end results container -->
+    </main>
+
+    <!-- start javascript -->
+    <script>
+      window.addEventListener("DOMContentLoaded", (event) => {
+        let fileName = "./books.xml"; //  xml doc
+
+        fetch(fileName) //  fetch the xml variable
+          .then((res) => res.text()) //  convert the xml to text maybe?
+          .then((data) => {
+            let domParser = new DOMParser(); //  setting parser to a variable
+            xmlBooks = domParser.parseFromString(data, "text/xml"); //  parsing the xml file
+            console.log("Data Parsed"); //  console message for sanity check
+            loadBooks(xmlBooks);
+            addIsbnClickEvents();
+          });
+        console.log("DOM loaded"); //  console message for sanity check
+      });
+
+      //  function to build the table
+      function loadBooks(xml) {
+        //  assigning a variable for each book in the xml doc
+        let books = xml.getElementsByTagName("book");
+        //  html table that we build onto
+        let tableData = `
+              <table id="bookTable" class="table">
+                  <tr>
+                      <th>ISBN</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Pages</th>
+                      <th>Authors</th>
+                  </tr>`;
+        //  loop over the xml books and build the table data
+        for (const book of books) {
+          let isbn =
+            book.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
+          let title =
+            book.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+          let description =
+            book.getElementsByTagName("description")[0].childNodes[0].nodeValue;
+          let pages =
+            book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
+          let authors =
+            book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
+          tableData += `<tr>
+                  <td data-value="ISBN"><a href="#" class="isbn-link">${isbn}</a></td>
+                  <td data-value="Title">${title}</td>
+                  <td data-value="Description">${description}</td>
+                  <td data-value="Pages">${pages}</td>
+                  <td data-value="Authors">${authors}</td>
+                  </tr>`;
+        }
+        `</table`;
+        document.getElementById("bookList").innerHTML = tableData;
+        console.log("table built"); //  console message for sanity check
+      }
+
+      function anchorClicked(e) {
+        e.preventDefault();
+
+        let self = this;
+        let cell = self.parentElement;
+        console.log(cell); //  console message for sanity check
+        let row = cell.parentElement;
+        console.log(row); //  console message for sanity check
+
+        let data = row.querySelectorAll("td");
+        console.log(data); //  console message for sanity check
+
+        let bookData = `<ul style='list-style-type:none;'>`;
+
+        for (let field of data) {
+          bookData += `<li><b>${field.dataset.value}: </b>${field.innerHTML}</li>`;
+        }
+        `</ul>`;
+        document.getElementById("selectedBook").innerHTML = bookData;
+        console.log("Book Selected"); //  console message for sanity check
+      }
+
+      function addIsbnClickEvents() {
+        let viewButtons = document.querySelectorAll(
+          "#bookTable tbody .isbn-link"
+        );
+        // forEach iterator through the table items
+        viewButtons.forEach((viewButtons) => {
+          viewButtons.addEventListener("click", anchorClicked);
+        });
+      }
+      // import { HttpClient } from "./http-client.js";
+      // let http = new HttpClient();
+      // const isbns = [
+      //   "0345339681",
+      //   "0261103571",
+      //   "9780593099322",
+      //   "9780261102361",
+      //   "9780261102378",
+      //   "9780590302715",
+      //   "9780316769532",
+      //   "9780743273565",
+      //   "9780590405959",
+      // ];
+      // const params = {
+      //   bibkeys: `ISBN:${isbns.join(",")}`,
+      //   format: "json",
+      //   jscmd: "details",
+      // };
+      // const file = "https://openlibrary.org/api/books";
+
+      // window.addEventListener("DOMContentLoaded", (event) => {
+      //   console.log("DOM loaded"); //  console message for sanity check
+
+      //   function setup() {
+      //     loadJSON(file, gotData);
+      //   }
+      // });
+
+      // function gotData(data) {
+      //   console.log(data);
+      // }
+
+      // fetch(file) //  fetch the url variable
+      //     .then((res) => res.text()) //  convert the url to text maybe?
+      //     .then((data) => {
+      //       let domParser = new DOMParser(); //  setting parser to a variable
+      //       console.log("Data Parsed"); //  console message for sanity check
+      //       http
+      //         .get("https://openlibrary.org/api/books", params)
+      //         .then((res) => {
+      //           console.log(res);
+
+      //           document.getElementById("bookListing").innerHTML =
+      //             buildHtmlString(res, "table");
+
+      //           addIsbnClickEvents();
+      //         })
+      //         .catch((e) => {
+      //           console.log(e);
+      //         });
+      //     });
+
+      // function getBook(e) {
+      //   let self = this;
+
+      //   let isbn = self.innerText;
+
+      //   const params = {
+      //     bibkeys: `ISBN:${isbns.join(",")}`,
+      //     format: "json",
+      //     jscmd: "details",
+      //   };
+
+      //   http.get("https://openlibrary.org/api/books", params).then((res) => {
+      //     document.getElementById("selectedBook").innerHTML = buildHtmlString(
+      //       res,
+      //       "ul"
+      //     ).catch((e) => {
+      //       console.log(e);
+      //     });
+      //   });
+      // } //  end getBook function
+
+      // function buildHtmlString(res, format) {
+      //   let tableString = `
+      //   <table id="bookTable" class="table">
+      //             <tr>
+      //                 <th>ISBN</th>
+      //                 <th>Title</th>
+      //                 <th>Description</th>
+      //                 <th>Pages</th>
+      //                 <th>Authors</th>
+      //             </tr>`;
+      //   let ulString = "";
+
+      //   for (let key in res) {
+      //     ulString += `<ul style="list-style-type: none">`;
+
+      //     if (res.hasOwnProperty(key)) {
+      //       let authors = [];
+      //       if (res[key].details.authors) {
+      //         authors = res[key].details.authors.map(function (author) {
+      //           return author.name;
+      //         });
+      //       }
+
+      //       let book = {
+      //         isbn: res[key].details.isbn,
+      //         title: res[key].details.title,
+      //         description: res[key].details.subtitle,
+      //         pages: res[key].details.number_of_pages,
+      //         authors: authors.join(","),
+      //       };
+
+      //       ulString += `
+      //       <li><b>ISBN:</b> ${book.isbn}</li>
+      //       <li><b>Title:</b> ${book.title}</li>
+      //       <li><b>Description:</b> ${book.description}</li>
+      //       <li><b>Pages:</b> ${book.pages}</li>
+      //       <li><b>Authors:</b> ${book.authors}</li>
+      //       `;
+
+      //       tableString += `<tr>
+      //           <td><a href="#">${book.isbn}</a></td>
+      //           <td>${book.title}</td>
+      //           <td>${book.description}</td>
+      //           <td>${book.pages}</td>
+      //           <td>${book.authors}</td>
+      //           </tr>`;
+      //     }
+      //   }
+      //   `</table>`;
+      // }
+
+      // function anchorClicked(e) {
+      //   e.preventDefault();
+
+      //   let self = this;
+      //   let cell = self.parentElement;
+      //   console.log(cell); //  console message for sanity check
+      //   let row = cell.parentElement;
+      //   console.log(row); //  console message for sanity check
+
+      //   let data = row.querySelectorAll("td");
+      //   console.log(data); //  console message for sanity check
+
+      //   let bookData = `<ul style='list-style-type:none;'>`;
+
+      //   for (let field of data) {
+      //     bookData += `<li><b>${field.dataset.value}: </b>${field.innerHTML}</li>`;
+      //   }
+      //   `</ul>`;
+      //   document.getElementById("selectedBook").innerHTML = bookData;
+      //   console.log("Book Selected"); //  console message for sanity check
+      // }
+
+      // function addIsbnClickEvents() {
+      //   let viewButtons = document.querySelectorAll(
+      //     "#bookTable tbody .isbn-link"
+      //   );
+      //   // forEach iterator through the table items
+      //   viewButtons.forEach((viewButtons) => {
+      //     viewButtons.addEventListener("click", anchorClicked);
+      //   });
+    </script>
+
+    <!-- theme switching script -->
+    <script>
+      //  theme function
+      setDefaultTheme();
+
+      //  onclick function
+      function toggleMode(x) {
+        let colorTheme = document.body.classList;
+        let iconMode = x.classList;
+
+        // changes from light to dark
+        if (colorTheme.value === "light-theme") {
+          localStorage.clear();
+          localStorage.setItem("mode", "dark-theme");
+          localStorage.setItem("iconMode", "fa-toggle-on");
+          localStorage.setItem("iconText", "Dark Mode");
+        } else {
+          //  changes from dark to light
+          localStorage.clear();
+          localStorage.setItem("mode", "light-theme");
+          localStorage.setItem("iconMode", "fa-toggle-off");
+          localStorage.setItem("iconText", "Light Mode");
+        }
+        // apply the changes
+        colorTheme.value = localStorage.getItem("mode");
+        iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+        document.getElementById("icon-text").innerHTML =
+          localStorage.getItem("iconText");
+      }
+    </script>
+  </body>
+</html>
